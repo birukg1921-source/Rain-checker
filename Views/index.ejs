@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will It Rain Tomorrow?</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Will It Rain Tomorrow?</h1>
+        <p>Enter a city to check tomorrow's rain forecast.</p>
+
+        <form action="/check" method="POST" class="form">
+            <input type="text" name="city" placeholder="e.g. Mekelle, London, Tokyo" required>
+            <button type="submit">Check</button>
+        </form>
+
+        <% if (locals.weather) { %>
+            <div class="card">
+                <h2>
+                    <%= weather.city %>
+                        <% if (weather.country) { %>, <%= weather.country %>
+                                <% } %>
+                </h2>
+                <p class="date">Date: <%= weather.date %>
+                </p>
+
+                <% if (weather.willRain) { %>
+                    <h3 class="rain">☔ Yes, it will rain tomorrow!</h3>
+                    <p>Chance of rain: <strong>
+                            <%= weather.rainChance %>%
+                        </strong></p>
+                    <p>Expected rainfall: <strong>
+                            <%= weather.rainVolume %> mm
+                        </strong></p>
+                    <% } else { %>
+                        <h3 class="clear">☀️ No rain expected tomorrow!</h3>
+                        <p>Chance of rain: <strong>
+                                <%= weather.rainChance %>%
+                            </strong></p>
+                        <% } %>
+
+                            <p>Max Temperature: <strong>
+                                    <%= weather.maxTemp %>°C
+                                </strong></p>
+            </div>
+            <% } %>
+
+                <% if (locals.error) { %>
+                    <div class="error-box">
+                        <p>
+                            <%= error %>
+                        </p>
+                    </div>
+                    <% } %>
+    </div>
+</body>
+
+</html>
